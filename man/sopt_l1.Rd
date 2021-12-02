@@ -3,7 +3,7 @@
 \title{sopt_l1
 }
 \description{
-maximize empirical AUC
+maximize empirical AUC under L1 constraint
 }
 \usage{
 sopt_l1(X, Y, beta_initial, tol, iteration, silence = TRUE)
@@ -19,10 +19,10 @@ Outcome vector
 Initial coefficient
 }
   \item{tol}{
-absolute tolerance for convergence criteria
+absolute tolerance for convergence criteria, default tolerance is 1e-5.
 }
   \item{iteration}{
-maximum number of iterations
+maximum number of iterations, default number of iterations is 20.
 }
   \item{silence}{
 whether to output intermediate results in each iteration
@@ -45,8 +45,26 @@ Yuxuan Chen
 }
 
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+n = 100
+d = 1
+mu = muo = rep(0,d+1) #mean of case group
+cov.tr = 0.2*matrix(c(rep(c(1,rep(0.9,(d+1))), d),1),ncol=(d+1))
+cov.tro =  2*matrix(c(rep(c(1,rep(0,(d+1))), d),1),ncol=(d+1))
+logit <- function(x) log(x/(1-x))
+expit <- function(x) 1/(1+exp(-x))
+
+# generate training data
+delta = rbinom(n,1,0.1)
+X = (1-delta)*mvrnorm(n,mu, cov.tr) + delta*mvrnorm(n,muo, cov.tro)
+prob = expit(4*X[,1] - 3*X[,2] - (X[,1]-X[,2])^3)
+Y = rbinom(n,1,prob)
+
+#logistic regression
+b <- glm(Y~X, family = binomial())
+b.beta <- b$coefficients[-1]/norm(b$coefficients[-1], type="2")
+eauc_l1(b.beta, X, Y, FALSE)
+
+a.l1 = sopt_l1(X,Y,b.beta,1e-5,20,silence=FALSE)
+lr.auc = eauc_l1(a.l1$beta, X, Y, FALSE)
 
 }

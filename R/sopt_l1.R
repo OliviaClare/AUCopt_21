@@ -1,4 +1,4 @@
-sopt_l1 <- function(X,Y, beta_initial, tol,iteration, silence = TRUE){
+sopt_l1 <- function(X,Y, beta_initial, tol=1e-5,iteration=20, silence = TRUE){
   #####LR coef as start value######
   ptm <- proc.time()
   # make sure the input format is correct
