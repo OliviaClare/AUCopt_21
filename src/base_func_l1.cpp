@@ -1,6 +1,5 @@
 #include "RcppArmadillo.h"
 // [[Rcpp::depends(RcppArmadillo)]]
-#include <iostream>
 
 
 // [[Rcpp::export]]
