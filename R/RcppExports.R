@@ -53,19 +53,3 @@ newton_raphson_l1 <- function(beta0, tol, iteration, gamma, X, Y, var) {
     .Call(`_AUCopt_newton_raphson_l1`, beta0, tol, iteration, gamma, X, Y, var)
 }
 
-rcpparma_hello_world <- function() {
-    .Call(`_AUCopt_rcpparma_hello_world`)
-}
-
-rcpparma_outerproduct <- function(x) {
-    .Call(`_AUCopt_rcpparma_outerproduct`, x)
-}
-
-rcpparma_innerproduct <- function(x) {
-    .Call(`_AUCopt_rcpparma_innerproduct`, x)
-}
-
-rcpparma_bothproducts <- function(x) {
-    .Call(`_AUCopt_rcpparma_bothproducts`, x)
-}
-

@@ -1,6 +1,6 @@
 #include "RcppArmadillo.h"
 // [[Rcpp::depends(RcppArmadillo)]]
-
+#include <iostream>
 
 // [[Rcpp::export]]
 double eauc_l1(arma::vec beta, arma::mat X, arma::vec Y, bool silence){

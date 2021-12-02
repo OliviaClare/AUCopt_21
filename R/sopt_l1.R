@@ -37,10 +37,12 @@ sopt_l1 <- function(X,Y, beta_initial, tol,iteration, silence = TRUE){
 
   beta.max = beta.max/sum(abs(beta.max)) #constrain by l1 norm
   varAUC = varauc_l1(beta.max,X,Y)
+  
+  biass = sum(diag(hessian.es%*%(z.var/n)))
 
   time.elapsed = proc.time()-ptm
   return_list = list("beta"=beta.max, "cov"=z.var/n, "hessian"=hessian.es, "iter"=k,"empirical_AUC"=eAUC,
-                     "smoothed_AUC"=sAUC, "var_AUC"=varAUC, "time.elapsed"=time.elapsed[3])
+                     "smoothed_AUC"=sAUC, "var_AUC"=varAUC, "bias"=biass, "time.elapsed"=time.elapsed[3])
   return(return_list)
 
 }
